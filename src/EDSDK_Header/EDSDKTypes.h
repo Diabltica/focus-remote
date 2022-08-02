@@ -392,7 +392,7 @@ typedef  EdsUInt32  EdsPropertyEvent;
 /* Notifies of changes in the list of camera properties with configurable values. 
  The list of configurable values for property IDs indicated in event data 
   can be retrieved by means of EdsGetPropertyDesc. 
- For type 1 protocol standard cameras, the property ID is identified as "Other"
+ For type 1 protocol standard cameras, the property ID is identified as "Unknown"
   during notification. 
   Thus, you must retrieve a list of configurable values for all properties and
   retrieve the property values repeatedly. 
