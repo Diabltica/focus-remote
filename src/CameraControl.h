@@ -22,7 +22,7 @@ EdsError initCamera(EdsBaseRef* CameraRef);
  * Close communication with the camera
  * IN : Camera's reference
  */
-EdsError destroy(EdsBaseRef* CameraRef);
+void destroy(EdsBaseRef* CameraRef);
 
 /*
  * Launch the live view

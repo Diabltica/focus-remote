@@ -35,20 +35,14 @@ EdsError initCamera(EdsBaseRef* cameraRef){
     return err;
 }
 
-EdsError destroy(EdsBaseRef* cameraRef){
+void destroy(EdsBaseRef* cameraRef) {
+
     EdsError err = EDS_ERR_OK;
     err = EdsCloseSession(*cameraRef);
+    err = EdsRelease(*cameraRef);
+    err = EdsTerminateSDK();
 
-    if(err = EDS_ERR_OK){
-        err = EdsRelease(*cameraRef);
-    }
-
-    if (err = EDS_ERR_OK){
-        err = EdsTerminateSDK();
-    }
-    return err;
 }
-
 EdsError launchLiveView(EdsBaseRef* cameraRef, EdsPropertyID outputScreen){
     EdsError err = EDS_ERR_OK;
 
