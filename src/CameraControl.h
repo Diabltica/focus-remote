@@ -30,4 +30,6 @@ EdsError destroy(EdsBaseRef* CameraRef);
  *      outputScreen - the choosen output screen TFT or PC
  */
 EdsError launchLiveView(EdsBaseRef* cameraRef, EdsPropertyID outputScreen);
+
+EdsError focusControl(EdsBaseRef* cameraRef, int newValue);
 #endif //FOCUS_REMOTE_CAMERACONTROL_H

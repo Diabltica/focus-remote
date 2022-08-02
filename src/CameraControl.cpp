@@ -70,3 +70,9 @@ EdsError launchLiveView(EdsBaseRef* cameraRef, EdsPropertyID outputScreen){
 
     return err;
 }
+
+EdsError focusControl(EdsBaseRef* cameraRef, int newValue){
+    EdsError err = EDS_ERR_OK;
+
+    return err;
+}
