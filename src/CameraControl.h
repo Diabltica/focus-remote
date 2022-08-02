@@ -18,5 +18,16 @@ using namespace std;
  */
 EdsError initCamera(EdsBaseRef* CameraRef);
 
+/*
+ * Close communication with the camera
+ * IN : Camera's reference
+ */
 EdsError destroy(EdsBaseRef* CameraRef);
+
+/*
+ * Launch the live view
+ * IN : cameraRef - Camera's reference
+ *      outputScreen - the choosen output screen TFT or PC
+ */
+EdsError launchLiveView(EdsBaseRef* cameraRef, EdsPropertyID outputScreen);
 #endif //FOCUS_REMOTE_CAMERACONTROL_H

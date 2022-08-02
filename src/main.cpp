@@ -5,14 +5,21 @@
 
 #include "EDSDK_Header/EDSDK.h"
 #include "EDSDK_Header/EDSDKTypes.h"
+#include "EDSDK_Header/EDSDKErrors.h"
 #include "CameraControl.h"
 using namespace std;
 
 
 int main(void)
 {
-    EdsCameraRef CameraRef = nullptr;
-    initCamera(&CameraRef);
-    destroy(&CameraRef);
+    EdsCameraRef cameraRef = nullptr;
+    EdsError err = EDS_ERR_OK;
+
+    err = initCamera(&cameraRef);
+
+    launchLiveView(&cameraRef, kEdsEvfOutputDevice_TFT);
+
+    system("pause");
+    destroy(&cameraRef);
 }
 

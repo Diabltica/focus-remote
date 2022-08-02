@@ -5,7 +5,7 @@
 #include "CameraControl.h"
 
 
-EdsError initCamera(EdsBaseRef* CameraRef){
+EdsError initCamera(EdsBaseRef* cameraRef){
     EdsError err = EDS_ERR_OK;
     EdsCameraListRef cameraList = NULL;
     EdsUInt32 count = 0;
@@ -26,10 +26,8 @@ EdsError initCamera(EdsBaseRef* CameraRef){
             return err;
         }
         cout << "It worked" << endl;
-        err = EdsGetChildAtIndex(cameraList, 0, CameraRef);
-        if(err = EDS_ERR_OK){
-            err = EdsOpenSession(*CameraRef);
-        }
+        err = EdsGetChildAtIndex(cameraList, 0, cameraRef);
+        err = EdsOpenSession(*cameraRef);
     }
     else {
         cout << "No Camera List" << endl;
@@ -37,16 +35,38 @@ EdsError initCamera(EdsBaseRef* CameraRef){
     return err;
 }
 
-EdsError destroy(EdsBaseRef* CameraRef){
+EdsError destroy(EdsBaseRef* cameraRef){
     EdsError err = EDS_ERR_OK;
-    err = EdsCloseSession(*CameraRef);
+    err = EdsCloseSession(*cameraRef);
 
     if(err = EDS_ERR_OK){
-        err = EdsRelease(*CameraRef);
+        err = EdsRelease(*cameraRef);
     }
 
     if (err = EDS_ERR_OK){
         err = EdsTerminateSDK();
     }
+    return err;
+}
+
+EdsError launchLiveView(EdsBaseRef* cameraRef, EdsPropertyID outputScreen){
+    EdsError err = EDS_ERR_OK;
+
+    EdsUInt32 device;
+    err = EdsGetPropertyData(*cameraRef,
+                             kEdsPropID_Evf_OutputDevice,
+                             0,
+                             sizeof(device),
+                             &device);
+
+    if (err == EDS_ERR_OK){
+        device |= outputScreen;
+        err = EdsSetPropertyData(*cameraRef,
+                                 kEdsPropID_Evf_OutputDevice,
+                                 outputScreen,
+                                 sizeof(device),
+                                 &device);
+    }
+
     return err;
 }
