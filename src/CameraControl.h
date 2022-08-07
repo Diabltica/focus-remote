@@ -12,24 +12,43 @@
 
 using namespace std;
 
-/*
- * Init the SDK, search for pluged camera and Open a session
- * OUT : Camera's reference
- */
-EdsError initCamera(EdsBaseRef* CameraRef);
+class Camera {
+private:
+    EdsBaseRef *cameraRef;
+    EdsError err = EDS_ERR_OK;
+    void move(bool direction, int size);
+public:
+    Camera();
 
-/*
- * Close communication with the camera
- * IN : Camera's reference
- */
-EdsError destroy(EdsBaseRef* CameraRef);
+    ~Camera();
 
-/*
- * Launch the live view
- * IN : cameraRef - Camera's reference
- *      outputScreen - the choosen output screen TFT or PC
- */
-EdsError launchLiveView(EdsBaseRef* cameraRef, EdsPropertyID outputScreen);
 
-EdsError focusControl(EdsBaseRef* cameraRef, int newValue);
+    EdsError launchLiveView(EdsPropertyID outputScreen);
+
+
+    /*
+    * Place the focus in a knowned position
+    * return the focus position
+    */
+    void resetFocusPosition(int* currentValue);
+
+
+    /*
+     * The position is between 0 and 395
+     */
+    EdsError focusControl(int newValue, int* currentValue);
+};
+
+#define Bstep 30.384615384615383
+#define Mstep 4.540229885057471
+/*
+ * FOCUS SPEC
+ * 13 step for setting 3   200ms delay
+ * 87 step for setting  2  100ms delay
+ * 395 step for setting 1  100ms delay
+ *
+ * 1 P3 = 30.385 P1
+ * 1 P2 = 4.54 P1
+ * 1 P3 = 6.69 P2
+*/
 #endif //FOCUS_REMOTE_CAMERACONTROL_H

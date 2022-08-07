@@ -12,14 +12,18 @@ using namespace std;
 
 int main(void)
 {
-    EdsCameraRef cameraRef = nullptr;
-    EdsError err = EDS_ERR_OK;
-
-    err = initCamera(&cameraRef);
-
-    launchLiveView(&cameraRef, kEdsEvfOutputDevice_TFT);
-
+    Camera mainCamera;
+    int currentValue = 0;
+    mainCamera.launchLiveView(kEdsEvfOutputDevice_TFT);
+    mainCamera.resetFocusPosition(&currentValue);
+    cout<< currentValue <<endl;
+    mainCamera.focusControl(300,&currentValue);
+    mainCamera.focusControl(200,&currentValue);
+    mainCamera.focusControl(100,&currentValue);
+    mainCamera.focusControl(200,&currentValue);
+    mainCamera.focusControl(300,&currentValue);
+    mainCamera.focusControl(0,&currentValue);
+    mainCamera.focusControl(395,&currentValue);
     system("pause");
-    destroy(&cameraRef);
 }
 
