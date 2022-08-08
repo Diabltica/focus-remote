@@ -25,12 +25,15 @@ set(SOURCES
         src/CameraControl.cpp)
 
 set(TEST
-        test/Focus_Test.cpp)
+#        test/Focus_Test.cpp
+        test/Zoom_Test.cpp
+        )
 
 add_executable(Focus_Remote
                 ${SOURCES}
                 src/main.cpp)
 #                ${TEST})
+
 message("-- Linking EDSDK")
 
 

@@ -17,5 +17,6 @@ int main(void)
     mainCamera.launchLiveView(kEdsEvfOutputDevice_TFT);
     mainCamera.resetFocusPosition(&currentValue);
     mainCamera.focusControl(250,&currentValue);
+    system("pause");
 }
 

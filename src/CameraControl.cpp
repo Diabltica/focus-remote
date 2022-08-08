@@ -98,3 +98,19 @@ void Camera::resetFocusPosition(int *currentValue) {
   }
   *currentValue = 395;
 }
+
+EdsError Camera::ZoomControl() {
+  EdsError err = EDS_ERR_OK;
+  EdsInt32 zoom[3] = {1,5,10};
+  if(zoomIndex == 2){
+    zoomIndex = 0;
+  }else{
+    zoomIndex ++;
+  }
+  err = EdsSetPropertyData(*cameraRef,
+                           kEdsPropID_Evf_Zoom,
+                           0,
+                           sizeof(EdsUInt32),
+                           &zoom[zoomIndex]);
+  return err;
+}

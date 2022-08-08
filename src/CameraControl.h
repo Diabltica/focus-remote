@@ -16,8 +16,8 @@ class Camera {
 private:
     EdsBaseRef *cameraRef;
     EdsError err = EDS_ERR_OK;
-    void move(bool direction, int size);
-public:
+    EdsInt32 zoomIndex = 0;
+  public:
     Camera();
 
     ~Camera();
@@ -37,6 +37,8 @@ public:
      * The position is between 0 and 395
      */
     EdsError focusControl(int newValue, int* currentValue);
+
+    EdsError ZoomControl();
 };
 
 #define Bstep 30.384615384615383
