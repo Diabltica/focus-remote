@@ -20,7 +20,7 @@ int main(void)
     mainCamera.focusControl(300,&currentValue);
     mainCamera.focusControl(200,&currentValue);
     mainCamera.focusControl(100,&currentValue);
-    mainCamera.focusControl(200,&currentValue);
+    mainCamera.focusControl(250,&currentValue); ////////////
     mainCamera.focusControl(300,&currentValue);
     mainCamera.focusControl(0,&currentValue);
     mainCamera.focusControl(395,&currentValue);

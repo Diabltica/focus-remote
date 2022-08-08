@@ -52,31 +52,34 @@ EdsError Camera::launchLiveView(EdsPropertyID outputScreen) {
                                  sizeof(device),
                                  &device);
     }
-
     return err;
 }
 
 EdsError Camera::focusControl(int newValue, int* currentValue) {
-    bool isNear = false;
+    int indexModifier = 32768;
     int delta = *currentValue - newValue;
     if(delta < 0){
-        isNear = true;
         delta = -delta;
+        indexModifier = 0;
     }
     int r;
     int Bmove = delta / Bstep;
     r = delta % (int)Bstep;
     int Mmove = r / Mstep;
     r = delta % int(Mstep);
+
     cout <<"Bmove: " << Bmove<<"  Mmove: "<< Mmove << "  Smove: " << r <<endl;
     for (int i = 0; i < Bmove; i++) {
-        this->move(isNear,3);
+        EdsSendCommand(*cameraRef,kEdsCameraCommand_DriveLensEvf,indexModifier+3);
+          usleep(200000);
     }
     for (int i = 0; i < Mmove; i++) {
-        this->move(isNear,2);
+        EdsSendCommand(*cameraRef,kEdsCameraCommand_DriveLensEvf,indexModifier+2);
+        usleep(100000);
     }
     for (int i = 0; i < r; i++) {
-        this->move(isNear,1);
+        EdsSendCommand(*cameraRef,kEdsCameraCommand_DriveLensEvf,indexModifier+1);
+        usleep(100000);
     }
     *currentValue = newValue;
 }
@@ -87,42 +90,4 @@ void Camera::resetFocusPosition(int* currentValue) {
         usleep(200000);
     }
     *currentValue = 395;
-}
-
-void Camera::move(bool direction, int size) {
-    if (!direction){
-        switch (size) {
-            case 1:
-                EdsSendCommand(*cameraRef,kEdsCameraCommand_DriveLensEvf,kEdsEvfDriveLens_Far1);
-                usleep(100000);
-                break;
-            case 2:
-                EdsSendCommand(*cameraRef,kEdsCameraCommand_DriveLensEvf,kEdsEvfDriveLens_Far2);
-                usleep(100000);
-                break;
-            case 3:
-                EdsSendCommand(*cameraRef,kEdsCameraCommand_DriveLensEvf,kEdsEvfDriveLens_Far3);
-                usleep(200000);
-                break;
-            default:
-                break;
-        }
-    }else{
-        switch (size) {
-            case 1:
-                EdsSendCommand(*cameraRef,kEdsCameraCommand_DriveLensEvf,kEdsEvfDriveLens_Near1);
-                usleep(100000);
-                break;
-            case 2:
-                EdsSendCommand(*cameraRef,kEdsCameraCommand_DriveLensEvf,kEdsEvfDriveLens_Near2);
-                usleep(100000);
-                break;
-            case 3:
-                EdsSendCommand(*cameraRef,kEdsCameraCommand_DriveLensEvf,kEdsEvfDriveLens_Near3);
-                usleep(200000);
-                break;
-            default:
-                break;
-        }
-    }
 }
