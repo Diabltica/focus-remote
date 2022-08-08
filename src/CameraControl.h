@@ -1,5 +1,5 @@
 //
-// Created by thoma on 02/08/2022.
+// Created by Diabltca on 02/08/2022.
 //
 
 #ifndef FOCUS_REMOTE_CAMERACONTROL_H
@@ -38,6 +38,7 @@ public:
      */
     EdsError focusControl(int newValue, int* currentValue);
 };
+
 
 #define Bstep 30.384615384615383
 #define Mstep 4.540229885057471
