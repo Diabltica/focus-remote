@@ -12,14 +12,10 @@ using namespace std;
 
 int main(void)
 {
-    EdsCameraRef cameraRef = nullptr;
-    EdsError err = EDS_ERR_OK;
-
-    err = initCamera(&cameraRef);
-
-    launchLiveView(&cameraRef, kEdsEvfOutputDevice_TFT);
-
-    system("pause");
-    destroy(&cameraRef);
+    Camera mainCamera;
+    int currentValue = 0;
+    mainCamera.launchLiveView(kEdsEvfOutputDevice_TFT);
+    mainCamera.resetFocusPosition(&currentValue);
+    mainCamera.focusControl(250,&currentValue);
 }
 

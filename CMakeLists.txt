@@ -21,10 +21,16 @@ set_property(TARGET EDSDK PROPERTY
 
 message("ADD Executable")
 include_directories(src/EDSDK_Header)
+set(SOURCES
+        src/CameraControl.cpp)
+
+set(TEST
+        test/Focus_Test.cpp)
 
 add_executable(Focus_Remote
-        src/main.cpp
-        src/CameraControl.cpp)
+                ${SOURCES}
+                src/main.cpp)
+#                ${TEST})
 message("-- Linking EDSDK")
 
 
