@@ -68,8 +68,6 @@ EdsError Camera::focusControl(int newValue, int *currentValue) {
   int Mmove = r / Mstep;
   r = delta % int(Mstep);
 
-  cout << "Bmove: " << Bmove << "  Mmove: " << Mmove << "  Smove: " << r
-       << endl;
   for (int i = 0; i < Bmove; i++) {
     EdsSendCommand(*cameraRef,
                    kEdsCameraCommand_DriveLensEvf,
