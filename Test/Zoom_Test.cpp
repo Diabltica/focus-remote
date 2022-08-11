@@ -17,10 +17,10 @@ int main(void)
   mainCamera.resetFocusPosition(&currentValue);
   mainCamera.focusControl(250,&currentValue);
   system("pause");
-  mainCamera.ZoomControl();
+  mainCamera.zoomControl();
   system("pause");
-  mainCamera.ZoomControl();
+  mainCamera.zoomControl();
   system("pause");
-  mainCamera.ZoomControl();
+  mainCamera.zoomControl();
   system("pause");
 }
