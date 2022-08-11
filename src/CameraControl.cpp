@@ -26,6 +26,11 @@ Camera::Camera() {
   } else {
     exit(err);
   }
+  EdsGetPropertyData(*cameraRef,
+                     kEdsPropID_Evf_ZoomPosition,
+                     0,
+                     sizeof(EdsPoint),
+                     &zoomCoordinate);
 }
 
 Camera::~Camera() {
@@ -35,8 +40,6 @@ Camera::~Camera() {
 }
 
 EdsError Camera::launchLiveView(EdsPropertyID outputScreen) {
-  EdsError err = EDS_ERR_OK;
-
   EdsUInt32 device;
   err = EdsGetPropertyData(*cameraRef,
                            kEdsPropID_Evf_OutputDevice,
@@ -63,10 +66,10 @@ EdsError Camera::focusControl(int newValue, int *currentValue) {
     indexModifier = 0;
   }
   int r;
-  int Bmove = delta / Bstep;
-  r = delta % (int)Bstep;
-  int Mmove = r / Mstep;
-  r = delta % int(Mstep);
+  int Bmove = delta / B_STEP;
+  r = delta % (int)B_STEP;
+  int Mmove = r / M_STEP;
+  r = delta % int(M_STEP);
 
   for (int i = 0; i < Bmove; i++) {
     EdsSendCommand(*cameraRef,
@@ -97,4 +100,57 @@ void Camera::resetFocusPosition(int *currentValue) {
     usleep(200000);
   }
   *currentValue = 395;
+}
+
+EdsError Camera::zoomControl() {
+  EdsInt32 zoom[3] = {1,5,10};
+  if(zoomIndex == 2){
+    zoomIndex = 0;
+  }else{
+    zoomIndex ++;
+  }
+  err = EdsSetPropertyData(*cameraRef,
+                           kEdsPropID_Evf_Zoom,
+                           0,
+                           sizeof(EdsUInt32),
+                           &zoom[zoomIndex]);
+  return err;
+}
+EdsError Camera::zoomPosition(char direction) {
+  switch (direction) {
+    case 'u': if (isOnScreen('v', 1)){
+                zoomCoordinate.y += POSITION_STEP;
+              }
+              break;
+    case 'd': if (isOnScreen('v', -1)){
+                zoomCoordinate.y -= POSITION_STEP;
+              }
+              break;
+    case 'r': if (isOnScreen('h', 1)){
+                zoomCoordinate.x += POSITION_STEP;
+              }
+              break;
+    case 'l': if (isOnScreen('h', -1)){
+                zoomCoordinate.x -= POSITION_STEP;
+              }
+              break;
+    default: break;
+  }
+  err = EdsSetPropertyData(*cameraRef,
+                           kEdsPropID_Evf_ZoomPosition,
+                           0,
+                           sizeof(EdsPoint),
+                           &zoomCoordinate);
+  return err;
+}
+bool Camera::isOnScreen(char axis, int direction) {
+  if(axis == 'v' && direction == 1){ // Vertical axis
+    return (zoomCoordinate.y + POSITION_STEP <= HEIGTH);
+  }else if (axis == 'v'){
+     return (zoomCoordinate.y - POSITION_STEP >= 0);
+  }else if (direction == 1){ // Horizontal axis
+    return (zoomCoordinate.x + POSITION_STEP <= WIDTH);
+  }else {
+    return (zoomCoordinate.x - POSITION_STEP >= 0);
+  }
 }
