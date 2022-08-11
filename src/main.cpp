@@ -18,17 +18,6 @@ int main(void)
     mainCamera.launchLiveView(kEdsEvfOutputDevice_TFT);
     mainCamera.resetFocusPosition(&currentValue);
     mainCamera.focusControl(250,&currentValue);
-    for (int i = 0; i < 50; ++i) {
-      mainCamera.zoomPosition('r');
-    }
-  mainCamera.zoomControl();
-  for (int i = 0; i < 50; ++i) {
-    mainCamera.zoomPosition('r');
-  }
-  mainCamera.zoomControl();
-//  for (int i = 0; i < 50; ++i) {
-//    mainCamera.zoomPosition('r');
-//  }
-  system("pause");
+    system("pause");
 }
 

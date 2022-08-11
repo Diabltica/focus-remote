@@ -23,4 +23,14 @@ int main(void)
   system("pause");
   mainCamera.zoomControl();
   system("pause");
+  for (int i = 0; i < 50; ++i) {
+    mainCamera.zoomPosition('r');
+  }
+  mainCamera.zoomControl();
+  mainCamera.zoomControl();
+  for (int i = 0; i < 50; ++i) {
+    mainCamera.zoomPosition('d');
+  }
+  mainCamera.zoomControl();
+  system("pause");
 }
