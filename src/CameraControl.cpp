@@ -31,6 +31,12 @@ Camera::Camera() {
                      0,
                      sizeof(EdsPoint),
                      &zoomCoordinate);
+  exposureIndex = 20;
+  EdsSetPropertyData(*cameraRef,
+                     kEdsPropID_ExposureCompensation,
+                     0,
+                     sizeof(EdsUInt32),
+                     &exposureValue[exposureIndex]);
 }
 
 Camera::~Camera() {
@@ -153,4 +159,27 @@ bool Camera::isOnScreen(char axis, int direction) {
   }else {
     return (zoomCoordinate.x - POSITION_STEP >= 0);
   }
+}
+
+EdsError Camera::exposureCompensation(char operation) {
+  if (operation == 'd') {//Increase
+    if(exposureIndex - 1 >= 0){
+      exposureIndex -= 1;
+      err = EdsSetPropertyData(*cameraRef,
+                               kEdsPropID_ExposureCompensation,
+                               0,
+                               sizeof(EdsUInt32),
+                               &exposureValue[exposureIndex]);
+    }
+  }else if(operation == 'i'){
+    if(exposureIndex + 1 <= 41){
+      exposureIndex += 1;
+      err = EdsSetPropertyData(*cameraRef,
+                               kEdsPropID_ExposureCompensation,
+                               0,
+                               sizeof(EdsUInt32),
+                               &exposureValue[exposureIndex]);
+    }
+  }
+  return err;
 }
