@@ -7,6 +7,7 @@
 #include "EDSDK_Header/EDSDKTypes.h"
 #include "EDSDK_Header/EDSDKErrors.h"
 #include "CameraControl.h"
+#include <unistd.h>
 using namespace std;
 
 
@@ -17,6 +18,17 @@ int main(void)
     mainCamera.launchLiveView(kEdsEvfOutputDevice_TFT);
     mainCamera.resetFocusPosition(&currentValue);
     mainCamera.focusControl(250,&currentValue);
-    system("pause");
+    for (int i = 0; i < 50; ++i) {
+      mainCamera.zoomPosition('r');
+    }
+  mainCamera.zoomControl();
+  for (int i = 0; i < 50; ++i) {
+    mainCamera.zoomPosition('r');
+  }
+  mainCamera.zoomControl();
+//  for (int i = 0; i < 50; ++i) {
+//    mainCamera.zoomPosition('r');
+//  }
+  system("pause");
 }
 
