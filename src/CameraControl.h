@@ -1,5 +1,5 @@
 //
-// Created by thoma on 02/08/2022.
+// Created by Diabltca on 02/08/2022.
 //
 
 #ifndef FOCUS_REMOTE_CAMERACONTROL_H
@@ -61,5 +61,4 @@ private:
 
     EdsError zoomPosition(char direction);
 };
-
 #endif //FOCUS_REMOTE_CAMERACONTROL_H
