@@ -18,6 +18,12 @@ int main(void)
     mainCamera.launchLiveView(kEdsEvfOutputDevice_TFT);
     mainCamera.resetFocusPosition(&currentValue);
     mainCamera.focusControl(250,&currentValue);
+    for (int i = 0; i < 20; ++i) {
+      mainCamera.exposureCompensation('i');
+    }
     system("pause");
+    for (int i = 0; i < 41; ++i) {
+      mainCamera.exposureCompensation('d');
+    }
 }
 
