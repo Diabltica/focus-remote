@@ -27,41 +27,44 @@ using namespace std;
 #define WIDTH 5000
 #define HEIGTH 3500
 #define POSITION_STEP 10
+// Const expression
 
-class Camera {
-private:
-  EdsBaseRef *cameraRef;
-  EdsError err = EDS_ERR_OK;
-  EdsInt32 zoomIndex = 0;
-  EdsPoint zoomCoordinate;
-  int exposureIndex;
-  const EdsUInt32 exposureValue[41] = {
-      216, 219, 220, 221, 224, 227, 228, 229, 232, 235, 236, 237, 240, 243,
-      244, 245, 248, 251, 252, 253, 0,   3,   4,   5,   8,   11,  12,  13,
-      16,  19,  20,  21,  24,  27,  28,  29,  32,  35,  36,  37,  40};
-  bool isOnScreen(char axis, int direction);
+class Camera
+{
+  private:
+    EdsBaseRef cameraRef;
+    EdsError err = EDS_ERR_OK;
+    EdsInt32 zoomIndex = 0;
+    EdsPoint zoomCoordinate;
+    int exposureIndex;
+    const EdsUInt32 exposureValue[41] = {
+        216, 219, 220, 221, 224, 227, 228, 229, 232, 235, 236, 237, 240, 243,
+        244, 245, 248, 251, 252, 253, 0,   3,   4,   5,   8,   11,  12,  13,
+        16,  19,  20,  21,  24,  27,  28,  29,  32,  35,  36,  37,  40
+    };
+    bool isOnScreen(char axis, int direction);
 
-public:
-  Camera();
+  public: // REGARDER FORME CANONIQUE CONSTRUCTEUR/DECONSTRUCTEUR ...
+    Camera();
 
-  ~Camera();
+    ~Camera();
 
-  EdsError launchLiveView(EdsPropertyID outputScreen);
+    EdsError launchLiveView(EdsPropertyID outputScreen);
 
-  /*
-   * Place the focus in a knowned position
-   * return the focus position
-   */
-  void resetFocusPosition(int *currentValue);
+    /*
+     * Place the focus in a knowned position
+     * return the focus position
+     */
+    void resetFocusPosition(int* currentValue);
 
-  /*
-   * The position is between 0 and 395
-   */
-  EdsError focusControl(int newValue, int *currentValue);
+    /*
+     * The position is between 0 and 395
+     */
+    EdsError focusControl(int newValue, int* currentValue);
 
-  EdsError zoomControl();
+    EdsError zoomControl();
 
-  EdsError zoomPosition(char direction);
-  EdsError exposureCompensation(char operation);
+    EdsError zoomPosition(char direction);
+    EdsError exposureCompensation(char operation);
 };
 #endif // FOCUS_REMOTE_CAMERACONTROL_H
