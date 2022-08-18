@@ -6,7 +6,6 @@
 #include "EDSDK_Header/EDSDK.h"
 #include "EDSDK_Header/EDSDKErrors.h"
 #include "EDSDK_Header/EDSDKTypes.h"
-#include <unistd.h>
 
 int
 main(void)

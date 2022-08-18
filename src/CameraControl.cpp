@@ -30,6 +30,7 @@ Camera::Camera()
                        0,
                        sizeof(EdsPoint),
                        &_zoomCoordinate);
+
     _exposureIndex = 20;
     EdsSetPropertyData(_cameraRef,
                        kEdsPropID_ExposureCompensation,
@@ -55,10 +56,10 @@ Camera::launchLiveView(EdsPropertyID outputScreen)
     if (_err == EDS_ERR_OK) {
         device |= outputScreen;
         _err = EdsSetPropertyData(_cameraRef,
-                                 kEdsPropID_Evf_OutputDevice,
-                                 outputScreen,
-                                 sizeof(device),
-                                 &device);
+                                  kEdsPropID_Evf_OutputDevice,
+                                  outputScreen,
+                                  sizeof(device),
+                                  &device);
     }
     _isError();
 }
@@ -121,6 +122,7 @@ Camera::zoomControl()
 
     _isError();
 }
+
 void
 Camera::zoomPosition(char direction)
 {
@@ -149,12 +151,13 @@ Camera::zoomPosition(char direction)
             break;
     }
     _err = EdsSetPropertyData(_cameraRef,
-                             kEdsPropID_Evf_ZoomPosition,
-                             0,
-                             sizeof(EdsPoint),
-                             &_zoomCoordinate);
+                              kEdsPropID_Evf_ZoomPosition,
+                              0,
+                              sizeof(EdsPoint),
+                              &_zoomCoordinate);
     _isError();
 }
+
 bool
 Camera::_isOnScreen(char axis, int direction)
 {
@@ -176,19 +179,19 @@ Camera::exposureCompensation(char operation)
         if (_exposureIndex - 1 >= 0) {
             _exposureIndex -= 1;
             _err = EdsSetPropertyData(_cameraRef,
-                                     kEdsPropID_ExposureCompensation,
-                                     0,
-                                     sizeof(EdsUInt32),
-                                     &_exposureValue[_exposureIndex]);
+                                      kEdsPropID_ExposureCompensation,
+                                      0,
+                                      sizeof(EdsUInt32),
+                                      &_exposureValue[_exposureIndex]);
         }
     } else if (operation == 'i') {
         if (_exposureIndex + 1 <= 41) {
             _exposureIndex += 1;
             _err = EdsSetPropertyData(_cameraRef,
-                                     kEdsPropID_ExposureCompensation,
-                                     0,
-                                     sizeof(EdsUInt32),
-                                     &_exposureValue[_exposureIndex]);
+                                      kEdsPropID_ExposureCompensation,
+                                      0,
+                                      sizeof(EdsUInt32),
+                                      &_exposureValue[_exposureIndex]);
         }
     }
 }
@@ -196,7 +199,7 @@ Camera::exposureCompensation(char operation)
 void
 Camera::_isError()
 {
-    if(_err != EDS_ERR_OK){
+    if (_err != EDS_ERR_OK) {
         throw CameraException(_err);
     }
 }

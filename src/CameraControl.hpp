@@ -1,5 +1,5 @@
 //
-// Created by thoma on 18/08/2022.
+// Created by Diabltica on 18/08/2022.
 //
 
 #ifndef FOCUS_REMOTE_CAMERACONTROL_HPP
@@ -8,7 +8,6 @@
 #include "EDSDK_Header/EDSDKErrors.h"
 #include "EDSDK_Header/EDSDKTypes.h"
 #include "iostream"
-#include <stdlib.h>
 
 /**
  * FOCUS SPEC <br>
@@ -42,7 +41,7 @@ class CameraException : public std::exception {
 class Camera
 {
   private:
-    EdsBaseRef _cameraRef;
+    EdsBaseRef _cameraRef = nullptr;
     EdsError _err = EDS_ERR_OK;
     EdsInt32 _zoomIndex = 0;
     EdsPoint _zoomCoordinate;
