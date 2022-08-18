@@ -2,69 +2,68 @@
 // Created by Diabltica on 02/08/2022.
 //
 
-#include "CameraControl.h"
+#include "CameraControl.hpp"
 #include <unistd.h>
 
 Camera::Camera()
 {
     EdsCameraListRef cameraList = nullptr;
     EdsUInt32 count = 0;
-    err = EdsInitializeSDK();
-    if (err != EDS_ERR_OK) { // UTILISER DES THROWS
-        cout << "SDK INITIALISATION FAILED WAIT FOR EXIT" << endl;
-        exit(84);
+    _err = EdsInitializeSDK();
+    if (_err != EDS_ERR_OK) {
+        throw CameraException(_err);
     }
-    err = EdsGetCameraList(&cameraList);
-    if (err != EDS_ERR_OK) {
-        exit(err);
+    _err = EdsGetCameraList(&cameraList);
+    if (_err != EDS_ERR_OK) {
+        throw CameraException(_err);
     }
-    err = EdsGetChildCount(cameraList, &count);
+    _err = EdsGetChildCount(cameraList, &count);
     if (count == 0) {
-        err = EDS_ERR_DEVICE_NOT_FOUND;
-        exit(err);
+        _err = EDS_ERR_DEVICE_NOT_FOUND;
+        throw CameraException(_err);
     }
-    err = EdsGetChildAtIndex(cameraList, 0, &cameraRef);
-    err = EdsOpenSession(cameraRef);
+    EdsGetChildAtIndex(cameraList, 0, &_cameraRef);
+    _err = EdsOpenSession(_cameraRef);
 
-    EdsGetPropertyData(cameraRef,
+    EdsGetPropertyData(_cameraRef,
                        kEdsPropID_Evf_ZoomPosition,
                        0,
                        sizeof(EdsPoint),
-                       &zoomCoordinate);
-    exposureIndex = 20;
-    EdsSetPropertyData(cameraRef,
+                       &_zoomCoordinate);
+    _exposureIndex = 20;
+    EdsSetPropertyData(_cameraRef,
                        kEdsPropID_ExposureCompensation,
                        0,
                        sizeof(EdsUInt32),
-                       &exposureValue[exposureIndex]);
+                       &_exposureValue[_exposureIndex]);
 }
 
 Camera::~Camera()
 {
-    EdsCloseSession(cameraRef);
-    EdsRelease(cameraRef);
+    EdsCloseSession(_cameraRef);
+    EdsRelease(_cameraRef);
     EdsTerminateSDK();
 }
 
-EdsError
+void
 Camera::launchLiveView(EdsPropertyID outputScreen)
 {
     EdsUInt32 device;
-    err = EdsGetPropertyData(
-      cameraRef, kEdsPropID_Evf_OutputDevice, 0, sizeof(device), &device);
+    _err = EdsGetPropertyData(
+      _cameraRef, kEdsPropID_Evf_OutputDevice, 0, sizeof(device), &device);
 
-    if (err == EDS_ERR_OK) {
+    if (_err == EDS_ERR_OK) {
         device |= outputScreen;
-        err = EdsSetPropertyData(cameraRef,
+        _err = EdsSetPropertyData(_cameraRef,
                                  kEdsPropID_Evf_OutputDevice,
                                  outputScreen,
                                  sizeof(device),
                                  &device);
     }
-    return err;
+    _isError();
 }
 
-EdsError
+void
 Camera::focusControl(int newValue, int* currentValue)
 {
     int indexModifier = 32768;
@@ -81,17 +80,17 @@ Camera::focusControl(int newValue, int* currentValue)
 
     for (int i = 0; i < Bmove; i++) {
         EdsSendCommand(
-          cameraRef, kEdsCameraCommand_DriveLensEvf, indexModifier + 3);
+          _cameraRef, kEdsCameraCommand_DriveLensEvf, indexModifier + 3);
         usleep(200000);
     }
     for (int i = 0; i < Mmove; i++) {
         EdsSendCommand(
-          cameraRef, kEdsCameraCommand_DriveLensEvf, indexModifier + 2);
+          _cameraRef, kEdsCameraCommand_DriveLensEvf, indexModifier + 2);
         usleep(100000);
     }
     for (int i = 0; i < r; i++) {
         EdsSendCommand(
-          cameraRef, kEdsCameraCommand_DriveLensEvf, indexModifier + 1);
+          _cameraRef, kEdsCameraCommand_DriveLensEvf, indexModifier + 1);
         usleep(100000);
     }
     *currentValue = newValue;
@@ -102,94 +101,102 @@ Camera::resetFocusPosition(int* currentValue)
 {
     for (int i = 0; i < 13; ++i) {
         EdsSendCommand(
-          cameraRef, kEdsCameraCommand_DriveLensEvf, kEdsEvfDriveLens_Near3);
+          _cameraRef, kEdsCameraCommand_DriveLensEvf, kEdsEvfDriveLens_Near3);
         usleep(200000);
     }
     *currentValue = 395;
 }
 
-EdsError
+void
 Camera::zoomControl()
 {
     EdsInt32 zoom[3] = { 1, 5, 10 };
-    if (zoomIndex == 2) {
-        zoomIndex = 0;
+    if (_zoomIndex == 2) {
+        _zoomIndex = 0;
     } else {
-        zoomIndex++;
+        _zoomIndex++;
     }
-    err = EdsSetPropertyData(
-      cameraRef, kEdsPropID_Evf_Zoom, 0, sizeof(EdsUInt32), &zoom[zoomIndex]);
-    return err;
+    _err = EdsSetPropertyData(
+      _cameraRef, kEdsPropID_Evf_Zoom, 0, sizeof(EdsUInt32), &zoom[_zoomIndex]);
+
+    _isError();
 }
-EdsError
+void
 Camera::zoomPosition(char direction)
 {
     switch (direction) {
         case 'u':
-            if (isOnScreen('v', 1)) {
-                zoomCoordinate.y += POSITION_STEP;
+            if (_isOnScreen('v', 1)) {
+                _zoomCoordinate.y += POSITION_STEP;
             }
             break;
         case 'd':
-            if (isOnScreen('v', -1)) {
-                zoomCoordinate.y -= POSITION_STEP;
+            if (_isOnScreen('v', -1)) {
+                _zoomCoordinate.y -= POSITION_STEP;
             }
             break;
         case 'r':
-            if (isOnScreen('h', 1)) {
-                zoomCoordinate.x += POSITION_STEP;
+            if (_isOnScreen('h', 1)) {
+                _zoomCoordinate.x += POSITION_STEP;
             }
             break;
         case 'l':
-            if (isOnScreen('h', -1)) {
-                zoomCoordinate.x -= POSITION_STEP;
+            if (_isOnScreen('h', -1)) {
+                _zoomCoordinate.x -= POSITION_STEP;
             }
             break;
         default:
             break;
     }
-    err = EdsSetPropertyData(cameraRef,
+    _err = EdsSetPropertyData(_cameraRef,
                              kEdsPropID_Evf_ZoomPosition,
                              0,
                              sizeof(EdsPoint),
-                             &zoomCoordinate);
-    return err;
+                             &_zoomCoordinate);
+    _isError();
 }
 bool
-Camera::isOnScreen(char axis, int direction)
+Camera::_isOnScreen(char axis, int direction)
 {
     if (axis == 'v' && direction == 1) { // Vertical axis
-        return (zoomCoordinate.y + POSITION_STEP <= HEIGTH);
+        return (_zoomCoordinate.y + POSITION_STEP <= HEIGTH);
     } else if (axis == 'v') {
-        return (zoomCoordinate.y - POSITION_STEP >= 0);
+        return (_zoomCoordinate.y - POSITION_STEP >= 0);
     } else if (direction == 1) { // Horizontal axis
-        return (zoomCoordinate.x + POSITION_STEP <= WIDTH);
+        return (_zoomCoordinate.x + POSITION_STEP <= WIDTH);
     } else {
-        return (zoomCoordinate.x - POSITION_STEP >= 0);
+        return (_zoomCoordinate.x - POSITION_STEP >= 0);
     }
 }
 
-EdsError
+void
 Camera::exposureCompensation(char operation)
 {
     if (operation == 'd') { // Increase
-        if (exposureIndex - 1 >= 0) {
-            exposureIndex -= 1;
-            err = EdsSetPropertyData(cameraRef,
+        if (_exposureIndex - 1 >= 0) {
+            _exposureIndex -= 1;
+            _err = EdsSetPropertyData(_cameraRef,
                                      kEdsPropID_ExposureCompensation,
                                      0,
                                      sizeof(EdsUInt32),
-                                     &exposureValue[exposureIndex]);
+                                     &_exposureValue[_exposureIndex]);
         }
     } else if (operation == 'i') {
-        if (exposureIndex + 1 <= 41) {
-            exposureIndex += 1;
-            err = EdsSetPropertyData(cameraRef,
+        if (_exposureIndex + 1 <= 41) {
+            _exposureIndex += 1;
+            _err = EdsSetPropertyData(_cameraRef,
                                      kEdsPropID_ExposureCompensation,
                                      0,
                                      sizeof(EdsUInt32),
-                                     &exposureValue[exposureIndex]);
+                                     &_exposureValue[_exposureIndex]);
         }
     }
-    return err;
+}
+
+void
+Camera::_isError()
+{
+    if(_err != EDS_ERR_OK){
+        throw CameraException(_err);
+    }
 }

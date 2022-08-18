@@ -1,5 +1,4 @@
 BasedOnStyle: Mozilla
-#AlwaysBreakAfterDefinitionReturnType: None
 ColumnLimit: 80
 IndentWidth: 4
 Language: Cpp
