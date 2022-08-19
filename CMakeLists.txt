@@ -1,7 +1,19 @@
 cmake_minimum_required(VERSION 3.17)
 project(Focus_Remote)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_PREFIX_PATH C:/Qt/6.3.1/mingw_64/lib/cmake)
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 message("Add Libraries")
 
@@ -12,9 +24,6 @@ add_library(EDSDK SHARED IMPORTED EDSDK/Dll)
 set_property(TARGET EDSDK PROPERTY
         IMPORTED_IMPLIB "C:/Users/thoma/CLionProjects/Focus-Remote/EDSDK/Dll/EDSDK.dll")
 
-#set_property(TARGET EDSDK PROPERTY
-#        IMPORTED_LOCATION "C:/Users/thoma/CLionProjects/Focus-Remote/EDSDK/Dll/EdsImage.dll")
-
 set_property(TARGET EDSDK PROPERTY
         IMPORTED_IMPLIB "C:/Users/thoma/CLionProjects/Focus-Remote/EDSDK/Dll/EDSDK.lib")
 
@@ -22,17 +31,47 @@ set_property(TARGET EDSDK PROPERTY
 message("ADD Executable")
 include_directories(src/EDSDK_Header)
 set(SOURCES
-        src/CameraControl.cpp)
+        src/CameraControl.cpp
+        src/ihm.cpp
+        src/ihm.ui)
 
 set(TEST
 #        test/Focus_Test.cpp
         test/Zoom_Test.cpp
         )
 
-add_executable(Focus_Remote
-                ${SOURCES}
-                src/main.cpp)
-#                ${TEST})
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(Focus_Remote
+            MANUAL_FINALIZATION
+            ${SOURCES}
+            src/main.cpp
+#            ${TEST}
+            )
+else()
+    if(ANDROID)
+        add_library(untitled2 SHARED
+                ${PROJECT_SOURCES}
+                )
+        # Define properties for Android with Qt 5 after find_package() calls as:
+        #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
+    else()
+        add_executable(untitled2
+                ${PROJECT_SOURCES}
+                )
+    endif()
+endif()
+
+target_link_libraries(Focus_Remote PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+set_target_properties(Focus_Remote PROPERTIES WIN32_EXECUTABLE TRUE)
+
+install(TARGETS Focus_Remote
+        BUNDLE DESTINATION .
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_finalize_executable(Focus_Remote)
+endif()
 
 message("-- Linking EDSDK")
 

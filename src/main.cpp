@@ -6,27 +6,33 @@
 #include "EDSDK_Header/EDSDK.h"
 #include "EDSDK_Header/EDSDKErrors.h"
 #include "EDSDK_Header/EDSDKTypes.h"
+#include "ihm.hpp"
+#include <QApplication>
 
 int
-main(void)
+main(int argc,char **argv)
 {
-    try {
-        Camera mainCamera;
-
-        int currentValue = 0;
-        mainCamera.launchLiveView(kEdsEvfOutputDevice_TFT);
-        mainCamera.resetFocusPosition(&currentValue);
-        mainCamera.focusControl(250, &currentValue);
-        for (int i = 0; i < 20; ++i) {
-            mainCamera.exposureCompensation('i');
-        }
-        system("pause");
-        for (int i = 0; i < 41; ++i) {
-            mainCamera.exposureCompensation('d');
-        }
-        system("pause");
-
-    } catch (CameraException e) {
-        std::cout << e.what();
-    }
+//    try {
+//        Camera mainCamera;
+//
+//        int currentValue = 0;
+//        mainCamera.launchLiveView(kEdsEvfOutputDevice_TFT);
+//        mainCamera.resetFocusPosition(&currentValue);
+//        mainCamera.focusControl(250, &currentValue);
+//        for (int i = 0; i < 20; ++i) {
+//            mainCamera.exposureCompensation('i');
+//        }
+//        system("pause");
+//        for (int i = 0; i < 41; ++i) {
+//            mainCamera.exposureCompensation('d');
+//        }
+//        system("pause");
+//
+//    } catch (CameraException e) {
+//        std::cout << e.what();
+//    }
+QApplication app(argc, argv);
+IHM mainWindow;
+mainWindow.show();
+return app.exec();
 }
