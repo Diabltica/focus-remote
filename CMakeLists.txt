@@ -14,6 +14,12 @@ set(CMAKE_PREFIX_PATH C:/Qt/6.3.1/mingw_64/lib/cmake)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt6QuickControls2 REQUIRED)
+find_package(Qt6Core REQUIRED)
+find_package(Qt6Gui REQUIRED)
+find_package(Qt6OpenGL REQUIRED)
+find_package(Qt6Quick REQUIRED)
+find_package(Qt6Qml REQUIRED)
 
 message("Add Libraries")
 
@@ -82,5 +88,5 @@ target_link_libraries(Focus_Remote LINK_PUBLIC EDSDK)
 message("-- Linking EdsImage")
 set_target_properties(EdsImage PROPERTIES LINKER_LANGUAGE C)
 target_link_libraries(Focus_Remote LINK_PUBLIC ${EdsImage})
-
+target_link_libraries(Focus_Remote PRIVATE Qt6::Core Qt6::Quick Qt6::QuickControls2)
 

@@ -76,5 +76,6 @@ class Camera
 
     void zoomPosition(char direction);
     void exposureCompensation(char operation);
+    void disconnect(void);
 };
 #endif // FOCUS_REMOTE_CAMERACONTROL_HPP

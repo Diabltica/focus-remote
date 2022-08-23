@@ -41,9 +41,7 @@ Camera::Camera()
 
 Camera::~Camera()
 {
-    EdsCloseSession(_cameraRef);
-    EdsRelease(_cameraRef);
-    EdsTerminateSDK();
+    disconnect();
 }
 
 void
@@ -62,6 +60,14 @@ Camera::launchLiveView(EdsPropertyID outputScreen)
                                   &device);
     }
     _isError();
+}
+
+void
+Camera::disconnect(void)
+{
+    EdsCloseSession(_cameraRef);
+    EdsRelease(_cameraRef);
+    EdsTerminateSDK();
 }
 
 void

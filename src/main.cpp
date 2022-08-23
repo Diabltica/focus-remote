@@ -4,10 +4,10 @@
 
 #include "CameraControl.hpp"
 #include "EDSDK_Header/EDSDK.h"
-#include "EDSDK_Header/EDSDKErrors.h"
-#include "EDSDK_Header/EDSDKTypes.h"
 #include "ihm.hpp"
 #include <QApplication>
+#include <QtQuick>
+#include <QtQuickControls2/qquickstyle.h>
 
 int
 main(int argc,char **argv)
@@ -31,8 +31,10 @@ main(int argc,char **argv)
 //    } catch (CameraException e) {
 //        std::cout << e.what();
 //    }
-QApplication app(argc, argv);
-IHM mainWindow;
-mainWindow.show();
-return app.exec();
+    QApplication app(argc, argv);
+    QQuickStyle::setStyle("Material");
+    IHM mainWindow;
+    mainWindow.setWindowState(Qt::WindowMaximized);
+    mainWindow.show();
+    return app.exec();
 }

@@ -1,28 +1,33 @@
 //
-// Created by thoma on 18/08/2022.
+// Created by Diabltica on 18/08/2022.
 //
+#ifndef IHM_H
+#define IHM_H
 
-#ifndef FOCUS_REMOTE_IHM_HPP
-#define FOCUS_REMOTE_IHM_HPP
+#include "CameraControl.hpp"
 
-#include <QWidget>
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class IHM;
-}
+namespace Ui { class IHM; }
 QT_END_NAMESPACE
 
-class IHM : public QWidget
+class IHM : public QMainWindow
 {
     Q_OBJECT
 
   public:
-    explicit IHM(QWidget* parent = nullptr);
-    ~IHM() override;
+    IHM(QWidget *parent = nullptr);
+    ~IHM();
+
+  private slots:
+    void on_ConnectButton_clicked(void);
+    void on_ZoomButton_clicked(void);
 
   private:
-    Ui::IHM* ui;
+    std::unique_ptr <Camera> _connectedCamera;
+    bool _isConnected = false;
+    int _zoomIndex = 0;
+    Ui::IHM *ui;
 };
-
-#endif // FOCUS_REMOTE_IHM_HPP
+#endif // IHM_H
