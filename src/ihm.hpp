@@ -22,7 +22,7 @@ class IHM : public QMainWindow
 
   private slots:
     void on_ConnectButton_clicked(void);
-    void on_ZoomButton_clicked(void);
+    void on_zoomButton_clicked(void);
 
   private:
     std::unique_ptr <Camera> _connectedCamera;

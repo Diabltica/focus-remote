@@ -10,7 +10,7 @@
 #include <iostream>
 #include <unistd.h>
 
-IHM::IHM(QWidget *parent)
+IHM::IHM(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::IHM)
 {
@@ -22,31 +22,43 @@ IHM::~IHM()
     delete ui;
 }
 
-void IHM::on_ConnectButton_clicked(void){
-    if(!_isConnected){
+void
+IHM::on_ConnectButton_clicked(void)
+{
+    if (!_isConnected) {
         try {
             _connectedCamera.reset(new Camera);
             ui->ConnectButton->setText("Connected");
+            _connectedCamera->launchLiveView(kEdsEvfOutputDevice_TFT);
             _isConnected = true;
         } catch (CameraException e) {
-            QString output(e.what());
-            ui->ErrorLabel->setText("Erreur");
+            QString output;
+            output = e.what();
+            ui->ErrorLabel->setText("Erreur " + output);
         }
-    }else{
+    } else {
         _isConnected = false;
-        _connectedCamera -> disconnect();
+        _connectedCamera->disconnect();
         _connectedCamera.reset();
         ui->ConnectButton->setText("Disconnected");
     }
 }
 
-void IHM::on_ZoomButton_clicked(void){
-//    switch (_zoomIndex) {
-//        case 1:
-//            ui->ZoomButton->setIcon("icons/x1.png");
-//    }
-    QPixmap pixmap("icons/x1.png");
-    QIcon ButtonIcon(pixmap);
-//    ui->ZoomButton->setIcon(ButtonIcon);
-//    ui->ZoomButton->setIconSize(pixmap.rect().size());
+void
+IHM::on_zoomButton_clicked(void)
+{
+    switch (_zoomIndex) {
+        case 0:
+            ui->zoomButton->setText("x1");
+            _zoomIndex++;
+            break;
+        case 1:
+            ui->zoomButton->setText("x5");
+            _zoomIndex++;
+            break;
+        case 2:
+            ui->zoomButton->setText("x10");
+            _zoomIndex = 0;
+            break;
+    }
 }
