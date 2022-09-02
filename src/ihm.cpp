@@ -119,22 +119,9 @@ IHM::on_FocusMS_clicked(void)
 }
 
 void
-IHM::on_PositionD_pressed(void)
+IHM::on_PositionD_clicked(void)
 {
-    _isPressed = true;
-    while(_isPressed){
-        _connectedCamera->zoomPosition('d');
-
-    }
-
-        _timer.start(1);
-}
-
-void
-IHM::on_PositionD_released(void)
-{
-//    _isPressed = false;
-_timer.stop();
+    _connectedCamera->zoomPosition('d');
 }
 void
 IHM::on_PositionU_clicked(void)

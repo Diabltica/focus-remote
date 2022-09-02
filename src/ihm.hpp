@@ -35,10 +35,9 @@ class IHM : public QMainWindow
     void on_PositionL_clicked(void);
     void on_PositionR_clicked(void);
     void on_PositionU_clicked(void);
-    void on_PositionD_pressed(void);
+    void on_PositionD_clicked(void);
     void on_ExposureI_clicked(void);
     void on_ExposureD_clicked(void);
-    void on_PositionD_released(void);
 
   private:
     std::unique_ptr<Camera> _connectedCamera;
