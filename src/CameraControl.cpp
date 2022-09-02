@@ -71,10 +71,10 @@ Camera::disconnect(void)
 }
 
 void
-Camera::focusControl(int newValue, int* currentValue)
+Camera::focusControl(int newValue)
 {
     int indexModifier = 32768;
-    int delta = *currentValue - newValue;
+    int delta = this->_focusValue - newValue;
     if (delta < 0) {
         delta = -delta;
         indexModifier = 0;
@@ -100,7 +100,7 @@ Camera::focusControl(int newValue, int* currentValue)
           _cameraRef, kEdsCameraCommand_DriveLensEvf, indexModifier + 1);
         usleep(100000);
     }
-    *currentValue = newValue;
+    this->_focusValue = newValue;
 }
 
 void
@@ -135,12 +135,12 @@ Camera::zoomPosition(char direction)
     switch (direction) {
         case 'u':
             if (_isOnScreen('v', 1)) {
-                _zoomCoordinate.y += POSITION_STEP;
+                _zoomCoordinate.y -= POSITION_STEP;
             }
             break;
         case 'd':
             if (_isOnScreen('v', -1)) {
-                _zoomCoordinate.y -= POSITION_STEP;
+                _zoomCoordinate.y += POSITION_STEP;
             }
             break;
         case 'r':
@@ -168,9 +168,9 @@ bool
 Camera::_isOnScreen(char axis, int direction)
 {
     if (axis == 'v' && direction == 1) { // Vertical axis
-        return (_zoomCoordinate.y + POSITION_STEP <= HEIGTH);
+        return (_zoomCoordinate.y - POSITION_STEP <= HEIGTH);
     } else if (axis == 'v') {
-        return (_zoomCoordinate.y - POSITION_STEP >= 0);
+        return (_zoomCoordinate.y + POSITION_STEP >= 0);
     } else if (direction == 1) { // Horizontal axis
         return (_zoomCoordinate.x + POSITION_STEP <= WIDTH);
     } else {
@@ -183,7 +183,7 @@ Camera::exposureCompensation(char operation)
 {
     if (operation == 'd') { // Increase
         if (_exposureIndex - 1 >= 0) {
-            _exposureIndex -= 1;
+            _exposureIndex --;
             _err = EdsSetPropertyData(_cameraRef,
                                       kEdsPropID_ExposureCompensation,
                                       0,
@@ -191,8 +191,8 @@ Camera::exposureCompensation(char operation)
                                       &_exposureValue[_exposureIndex]);
         }
     } else if (operation == 'i') {
-        if (_exposureIndex + 1 <= 41) {
-            _exposureIndex += 1;
+        if (_exposureIndex + 1 <= 40) {
+            _exposureIndex ++;
             _err = EdsSetPropertyData(_cameraRef,
                                       kEdsPropID_ExposureCompensation,
                                       0,
@@ -208,4 +208,14 @@ Camera::_isError()
     if (_err != EDS_ERR_OK) {
         throw CameraException(_err);
     }
+}
+int
+Camera::getFocusValue()
+{
+    return this->_focusValue;
+}
+int
+Camera::getExposureIndex()
+{
+    return _exposureIndex;
 }

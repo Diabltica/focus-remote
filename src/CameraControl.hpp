@@ -46,6 +46,7 @@ class Camera
     EdsInt32 _zoomIndex = 0;
     EdsPoint _zoomCoordinate;
     int _exposureIndex;
+    int _focusValue;
     const EdsUInt32 _exposureValue[41] = {
         216, 219, 220, 221, 224, 227, 228, 229, 232, 235, 236, 237, 240, 243,
         244, 245, 248, 251, 252, 253, 0,   3,   4,   5,   8,   11,  12,  13,
@@ -59,6 +60,10 @@ class Camera
 
     ~Camera();
 
+    int getFocusValue();
+
+    int getExposureIndex();
+
     void launchLiveView(EdsPropertyID outputScreen);
 
     /**
@@ -70,7 +75,7 @@ class Camera
     /**
      * The position is between 0 and 395
      */
-    void focusControl(int newValue, int* currentValue);
+    void focusControl(int newValue);
 
     void zoomControl();
 
