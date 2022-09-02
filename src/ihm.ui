@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>IHM</class>
+    <widget class="QMainWindow" name="IHM">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>1440</width>
+                <height>780</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>IHM</string>
+        </property>
+        <property name="styleSheet">
+            <string notr="true">background-color: #24293e;</string>
+        </property>
+        <widget class="QWidget" name="centralwidget">
+            <widget class="QPushButton" name="ComSelector">
+                <property name="geometry">
+                    <rect>
+                        <x>60</x>
+                        <y>60</y>
+                        <width>175</width>
+                        <height>150</height>
+                    </rect>
+                </property>
+                <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                            border-radius: 10px;
+                            color: #8ebaff;
+                            font: 700 12pt "Segoe UI";
+                            background-color: #3d486a;
+                            border-style: outset;
+                        }
+                        QPushButton::pressed{
+                            background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>Port Com Selector</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="ConnectButton">
+                <property name="geometry">
+                    <rect>
+                        <x>245</x>
+                        <y>60</y>
+                        <width>175</width>
+                        <height>150</height>
+                    </rect>
+                </property>
+                <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>Disconnect</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="Save">
+                <property name="geometry">
+                    <rect>
+                        <x>60</x>
+                        <y>245</y>
+                        <width>360</width>
+                        <height>100</height>
+                    </rect>
+                </property>
+                <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>Save</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="Load">
+                <property name="geometry">
+                    <rect>
+                        <x>60</x>
+                        <y>380</y>
+                        <width>360</width>
+                        <height>100</height>
+                    </rect>
+                </property>
+                <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>Load</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="zoomButton">
+                <property name="geometry">
+                    <rect>
+                        <x>165</x>
+                        <y>550</y>
+                        <width>150</width>
+                        <height>150</height>
+                    </rect>
+                </property>
+                <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>x1</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="PositionL">
+                <property name="geometry">
+                    <rect>
+                        <x>588</x>
+                        <y>281</y>
+                        <width>100</width>
+                        <height>100</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>LEFT</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="PositionD">
+                <property name="geometry">
+                    <rect>
+                        <x>708</x>
+                        <y>401</y>
+                        <width>100</width>
+                        <height>100</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>DOWN</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="PositionU">
+                <property name="geometry">
+                    <rect>
+                        <x>708</x>
+                        <y>161</y>
+                        <width>100</width>
+                        <height>100</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>UP</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="PositionR">
+                <property name="geometry">
+                    <rect>
+                        <x>828</x>
+                        <y>281</y>
+                        <width>100</width>
+                        <height>100</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>RIGHT</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="FocusPB">
+                <property name="geometry">
+                    <rect>
+                        <x>1200</x>
+                        <y>110</y>
+                        <width>100</width>
+                        <height>50</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                    </string>
+                </property>
+                <property name="text">
+                    <string>&gt;&gt;&gt;</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="FocusPM">
+                <property name="geometry">
+                    <rect>
+                        <x>1200</x>
+                        <y>180</y>
+                        <width>100</width>
+                        <height>50</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>&gt;&gt;</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="FocusPS">
+                <property name="geometry">
+                    <rect>
+                        <x>1200</x>
+                        <y>250</y>
+                        <width>100</width>
+                        <height>50</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>&gt;</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="FocusMB">
+                <property name="geometry">
+                    <rect>
+                        <x>1200</x>
+                        <y>530</y>
+                        <width>100</width>
+                        <height>50</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>&lt;&lt;&lt;</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="FocusMM">
+                <property name="geometry">
+                    <rect>
+                        <x>1200</x>
+                        <y>460</y>
+                        <width>100</width>
+                        <height>50</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>&lt;&lt;</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="FocusMS">
+                <property name="geometry">
+                    <rect>
+                        <x>1200</x>
+                        <y>390</y>
+                        <width>100</width>
+                        <height>50</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>&lt;</string>
+                </property>
+            </widget>
+            <widget class="QProgressBar" name="Exposure">
+                <property name="geometry">
+                    <rect>
+                        <x>513</x>
+                        <y>595</y>
+                        <width>490</width>
+                        <height>50</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QProgressBar {
+                        border-radius: 10px;
+                        color: #ffffff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #2f3855;
+                        border-style: outset;
+                        }
+                        QProgressBar::chunk {
+                        border-radius: 10px;
+                        color: #bd8d8f;
+                        background-color: #bd8d8f;
+                        border-style: outset;
+                        }
+                    </string>
+                </property>
+                <property name="toolTipDuration">
+                    <number>-1</number>
+                </property>
+                <property name="layoutDirection">
+                    <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="minimum">
+                    <number>-500</number>
+                </property>
+                <property name="maximum">
+                    <number>500</number>
+                </property>
+                <property name="value">
+                    <number>0</number>
+                </property>
+                <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                </property>
+                <property name="format">
+                    <string/>
+                </property>
+            </widget>
+            <widget class="QLabel" name="ExposureIndicator">
+                <property name="geometry">
+                    <rect>
+                        <x>522</x>
+                        <y>600</y>
+                        <width>471</width>
+                        <height>41</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">border-radius: 10px;
+                        color: #ffffff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: rgba(0,0,0,0%);
+                        border-style: outset;
+                    </string>
+                </property>
+                <property name="text">
+                    <string/>
+                </property>
+                <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="ExposureI">
+                <property name="geometry">
+                    <rect>
+                        <x>903</x>
+                        <y>650</y>
+                        <width>100</width>
+                        <height>50</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>&gt;</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" name="ExposureD">
+                <property name="geometry">
+                    <rect>
+                        <x>513</x>
+                        <y>650</y>
+                        <width>100</width>
+                        <height>50</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">
+                        QPushButton{
+                        border-radius: 10px;
+                        color: #8ebaff;
+                        font: 700 12pt "Segoe UI";
+                        background-color: #3d486a;
+                        border-style: outset;
+                        }
+                        QPushButton::pressed{
+                        background-color: #2f3855;
+                        }
+                    </string>
+                </property>
+                <property name="text">
+                    <string>&lt;</string>
+                </property>
+            </widget>
+
+            <widget class="QLabel" name="ErrorLabel">
+                <property name="geometry">
+                    <rect>
+                        <x>550</x>
+                        <y>0</y>
+                        <width>411</width>
+                        <height>111</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">font: 700 16pt &quot;Segoe UI&quot;;
+                        color: red;
+                    </string>
+                </property>
+                <property name="text">
+                    <string/>
+                </property>
+                <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                </property>
+            </widget>
+        </widget>
+        <widget class="QMenuBar" name="menubar">
+            <property name="geometry">
+                <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>1440</width>
+                    <height>25</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="QStatusBar" name="statusbar"/>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>
