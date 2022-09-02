@@ -3,7 +3,7 @@
 //
 
 
-#include "ihm.hpp"
+#include "src/UI/ihm.hpp"
 #include <QApplication>
 
 int

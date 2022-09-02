@@ -4,7 +4,7 @@
 #ifndef IHM_H
 #define IHM_H
 
-#include "CameraControl.hpp"
+#include "Headers/CameraControl.hpp"
 
 #include <QMainWindow>
 #include <QTimer>

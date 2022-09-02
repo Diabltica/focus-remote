@@ -2,7 +2,7 @@
 // Created by Diabltica on 02/08/2022.
 //
 
-#include "CameraControl.hpp"
+#include "Headers/CameraControl.hpp"
 #include <unistd.h>
 
 Camera::Camera()
