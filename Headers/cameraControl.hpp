@@ -64,6 +64,10 @@ class Camera
 
     int getExposureIndex();
 
+    int getZoomIndex();
+
+    EdsPoint getZoomCoordinate();
+
     void launchLiveView(EdsPropertyID outputScreen);
 
     /**

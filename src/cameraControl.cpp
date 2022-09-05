@@ -2,7 +2,7 @@
 // Created by Diabltica on 02/08/2022.
 //
 
-#include "Headers/CameraControl.hpp"
+#include "Headers/cameraControl.hpp"
 #include <unistd.h>
 
 Camera::Camera()
@@ -209,13 +209,25 @@ Camera::_isError()
         throw CameraException(_err);
     }
 }
+
 int
 Camera::getFocusValue()
 {
     return this->_focusValue;
 }
+
 int
 Camera::getExposureIndex()
 {
-    return _exposureIndex;
+    return this->_exposureIndex;
+}
+
+int
+Camera::getZoomIndex(){
+    return this->_zoomIndex;
+}
+
+EdsPoint
+Camera::getZoomCoordinate(){
+    return this->_zoomCoordinate;
 }
