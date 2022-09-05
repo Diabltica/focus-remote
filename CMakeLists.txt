@@ -37,7 +37,8 @@ set_property(TARGET EDSDK PROPERTY
 message("ADD Executable")
 include_directories(Headers/EDSDK_Header)
 set(SOURCES
-        src/CameraControl.cpp
+        src/cameraControl.cpp
+        src/configModule.cpp
         src/UI/ihm.cpp
         src/UI/ihm.ui)
 
