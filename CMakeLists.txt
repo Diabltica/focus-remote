@@ -39,7 +39,7 @@ include_directories(Headers/EDSDK_Header)
 set(SOURCES
         src/CameraControl.cpp
         src/UI/ihm.cpp
-        src/UI/ihm.ui)
+        src/UI/ihm.ui src/serialSender.cpp Headers/serialSender.hpp)
 
 set(TEST
 #        test/Focus_Test.cpp
